@@ -18,10 +18,10 @@ class TeachersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Admin/Teachers', [
-            //
+            'teachers' => Teachers::where('role', 2)->get(),
         ]);
     }
 

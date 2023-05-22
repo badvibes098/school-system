@@ -9,9 +9,5 @@ class Teachers extends Model
 {
     use HasFactory;
 
-    public function chirps(): HasMany
-    {
-        return $this->hasMany(Chirp::class);
-    }
-
+    protected $table = 'users';
 }

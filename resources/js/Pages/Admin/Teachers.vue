@@ -4,45 +4,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import GreenButton from '@/Components/GreenButton.vue';
 import { Head } from '@inertiajs/vue3';
 
-import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net';
-//import DataTablesCore from 'datatables.net-bs5';
- 
-DataTable.use(DataTablesCore);
+import ListTeacher from './List-Teacher.vue';
 
-const sulod = [
-  ['Ivan Gaspar', 'ivan@ivan', 1],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-  ['asaas Gaspar', 'ivan@ivan', 2],
-
-];
-
-  
+defineProps(['teachers']);
 </script>
 
 
@@ -74,17 +38,35 @@ const sulod = [
                             </template>
                             </modal>
                         </Teleport>
-                        <div class="bg-gray-50">
-                          <DataTable :data="sulod" class="display" :options="{ select: true }" ref="table">
-                              <thead>
-                                  <tr>
-                                      <th>Name of Teacher</th>
-                                      <th>Email</th>
-                                      <th>Manage</th>
-                                  </tr>
-                              </thead>
-                          </DataTable>
-                        </div>
+                        <!-- table --> 
+                          <div class="relative overflow-x-auto">
+                              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                      <tr>
+                                          <th scope="col" class="px-6 py-3">
+                                              Name of Teacher
+                                          </th>
+                                          <th scope="col" class="px-6 py-3">
+                                              Email
+                                          </th>
+                                          <th scope="col" class="px-6 py-3">
+                                              Teacher ID
+                                          </th>
+                                          <th scope="col" class="px-6 py-3">
+                                              Actions
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>             
+                                    <ListTeacher
+                                      v-for="teacher in teachers"
+                                      :key="teacher.id"
+                                      :teacher="teacher"
+                                    /> 
+                                  </tbody>
+                                </table>
+                             </div>
+                        <!-- table -->  
                     </div>
                 </div>
             </div>
@@ -93,8 +75,7 @@ const sulod = [
 </template>
 
 <style>
-@import 'datatables.net-bs5';
-@import 'datatables.net-dt';
+
 </style>
 
 <script>
@@ -109,7 +90,8 @@ export default {
       showModal: false
     }
   }
-
-
 }
+
 </script>
+
+

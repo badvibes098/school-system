@@ -34,10 +34,6 @@ Route::get('/settings', function () {
     return Inertia::render('Admin/Settings');
 })->middleware(['auth', 'verified'])->name('settings');
 
-Route::get('/teachers', function () {
-    return Inertia::render('Admin/Teachers');
-})->middleware(['auth', 'verified'])->name('teachers');
-
 Route::get('/sections', function () {
     return Inertia::render('Admin/Sections');
 })->middleware(['auth', 'verified'])->name('sections');
@@ -48,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+// new 
+Route::resource('teachers', TeachersController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
