@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Teachers;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Illuminate\Support\Facades\Gate;
 
 class TeachersController extends Controller
 {
@@ -20,9 +24,15 @@ class TeachersController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Admin/Teachers', [
-            'teachers' => Teachers::where('role', 2)->get(),
-        ]);
+        if (Gate::allows('admin-access')){
+            $list = Teachers::where('role', 2)->orderBy('position')->paginate(8);
+            return Inertia::render('Admin/Teachers', [
+                'teachers' => $list,
+            ]);
+        }
+        else{
+            return abort(403);
+        }
     }
 
     /**

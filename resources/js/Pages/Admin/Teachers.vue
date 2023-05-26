@@ -5,8 +5,11 @@ import GreenButton from '@/Components/GreenButton.vue';
 import { Head } from '@inertiajs/vue3';
 
 import ListTeacher from './List-Teacher.vue';
+import Pagination from '@/Components/Pagination.vue';
 
-defineProps(['teachers']);
+defineProps({
+    teachers: Object,
+});
 </script>
 
 
@@ -20,7 +23,7 @@ defineProps(['teachers']);
         </template>
 
         <div class="py-12" >
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" >
+            <div class="max-w-9xl mx-auto sm:px-6 lg:px-8" >
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                       <div class="p-6 text-gray-900">
                         <GreenButton 
@@ -29,6 +32,7 @@ defineProps(['teachers']);
                           class=""
                           >Create a Teacher Account
                         </GreenButton>
+                       
 
                         <Teleport to="body">
                             <!-- use the modal component, pass in the prop -->
@@ -50,21 +54,25 @@ defineProps(['teachers']);
                                               Email
                                           </th>
                                           <th scope="col" class="px-6 py-3">
-                                              Teacher ID
+                                              Position
+                                          </th>
+                                          <th scope="col" class="px-6 py-3">
+                                              Status
                                           </th>
                                           <th scope="col" class="px-6 py-3">
                                               Actions
                                           </th>
                                       </tr>
                                   </thead>
-                                  <tbody>             
+                                  <tbody>
                                     <ListTeacher
-                                      v-for="teacher in teachers"
+                                      v-for="teacher in teachers.data"
                                       :key="teacher.id"
                                       :teacher="teacher"
                                     /> 
                                   </tbody>
                                 </table>
+                                <Pagination class="mt-6" :links="teachers.links" />
                              </div>
                         <!-- table -->  
                     </div>

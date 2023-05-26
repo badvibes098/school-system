@@ -12,12 +12,16 @@ const form = useForm({
     email: '',
     password: '',
     role: 2,
+    birthdate: '',
+    gender: '',
+    position: '',
+    hs: '',
     password_confirmation: '',
 });
 
 const submit = () => {
     form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'), 
+        onFinish: () => form.reset(),
     });
 };
 </script>
@@ -42,37 +46,82 @@ export default {
 
         <div class="modal-body">
           <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                  <InputLabel for="name" value="Name" />
+                  <TextInput
+                      id="name"
+                      type="text"
+                      class="mt-1 block w-full"
+                      v-model="form.name"
+                      required
+                      autofocus
+                      autocomplete="name"
+                  />
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+                  <InputError class="mt-2" :message="form.errors.name" />
+              </div>
+              <div>
+                  <InputLabel for="email" value="Email" />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                  <TextInput
+                      id="email"
+                      type="email"
+                      class="mt-1 block w-full"
+                      v-model="form.email"
+                      required
+                      autocomplete="email"
+                  />
+                  <InputError class="mt-2" :message="form.errors.email" />
+              </div>
+              
+              <div>
+                <InputLabel for="position" value="Position" />
+                <select id="position" v-model="form.position" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                  <option value="Teacher 1">Teacher 1</option>
+                  <option value="Teacher 2">Teacher 2</option>
+                  <option value="Teacher 3">Teacher 3</option>
+                  <option value="Master Teacher 1">Master Teacher 1</option>
+                  <option value="Master Teacher 2">Master Teacher 2</option>
+                  <option value="Master Teacher 3">Master Teacher 3</option>
+                  <option value="Special Science Teacher 1">Special Science Teacher 1</option>
+                </select>
+              </div>
+
+              <div>
+                <InputLabel for="gender" value="Gender" />
+                <div class="mt-3 block w-full">
+                  <input id="default-radio-1" type="radio" value="male" name="default-radio" v-model="form.gender" required>
+                  <label for="default-radio-1" class="px-6">Male</label>
+                  <input checked id="default-radio-2" type="radio" value="female" name="default-radio" v-model="form.gender" required>
+                  <label for="default-radio-2" class="px-6">Female</label>
+                </div>
+              </div>
+
+              <div>
+                <InputLabel for="hs" value="Campus" />
+                <select id="hs" v-model="form.hs" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                  <option value="1">JHS</option>
+                  <option value="2">SHS</option>
+                </select>
+              </div>
+
+              <div>
+                  <InputLabel for="birthdate" value="Date of Birth" />
+                  <TextInput
+                      id="birthdate"
+                      type="date"
+                      class="mt-1 block w-full"
+                      v-model="form.birthdate"
+                      required
+                      autofocus
+                      autocomplete="name"
+                  />
+
+                  <InputError class="mt-2" :message="form.errors.name" />
+              </div>
+            
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
             <div class="mt-4">
                 <InputLabel for="password" value="Password" />
 
@@ -104,10 +153,15 @@ export default {
             </div>
 
             <div class="flex items-center justify-end mt-4">
+                <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Teacher Registered. </p>
+                </Transition>
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </PrimaryButton>
-                <RedButton class="ml-2" @click="$emit('close')">
+                <RedButton class="ml-2" 
+                  @click="$emit('close')"
+                  >
                     Close
                 </RedButton>
             </div>
@@ -117,10 +171,6 @@ export default {
         <!--
         <div class="modal-footer">
           <slot name="footer">
-            <button
-              class="modal-default-button"
-                @click="$emit('close')"
-            >OK</button>
           </slot>
         </div>
         -->

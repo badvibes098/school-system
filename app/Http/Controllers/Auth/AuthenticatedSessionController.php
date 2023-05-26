@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use App\Models\Teachers;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -24,7 +26,7 @@ class AuthenticatedSessionController extends Controller
             'status' => session('status'),
         ]);
     }
-
+ 
     /**
      * Handle an incoming authentication request.
      */
@@ -33,11 +35,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         
         $request->session()->regenerate();
-
-        $request->session()->all();
-        
-        return redirect()->intended(RouteServiceProvider::HOME);
     
+        $request->session()->all();
+            
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

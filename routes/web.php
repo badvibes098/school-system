@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\Admin\TeachersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
+use App\Models\Teachers; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,18 +19,23 @@ use Inertia\Inertia;
 |
 */
 
+
+
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    return Inertia::render('Auth/Login', [
     ]);
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Admin/Dashboard');
+    $role = Auth::user()->role;
+    if ( $role === 1){
+        return Inertia::render('Admin/Dashboard');
+    }
+    else{
+        return Inertia::render('Teachers/Dashboard');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::get('/settings', function () {
     return Inertia::render('Admin/Settings');
@@ -41,10 +48,9 @@ Route::get('/sections', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// new 
+// Admin resources 
 Route::resource('teachers', TeachersController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);

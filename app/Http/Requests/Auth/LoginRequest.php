@@ -29,7 +29,6 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'role' => ['integer'],
         ];
     }
 
@@ -46,6 +45,7 @@ class LoginRequest extends FormRequest
                 $this->only('email', 'password'), 
                 $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
+            //session(['email' => 'email']);
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
@@ -53,6 +53,8 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+        //put email to session for role identification
+        //session(['email' => Str::lower($this->input('email'))]); resolved: Auth::user()->email
     }
 
     /**
