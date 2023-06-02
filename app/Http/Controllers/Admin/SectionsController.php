@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
+
+use App\Models\Admin\Sections;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Teachers;
@@ -15,24 +17,14 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use Illuminate\Support\Facades\Gate;
-
-class TeachersController extends Controller
+class SectionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        if (Gate::allows('admin-access')){
-            $list = Teachers::where('role', 2)->orderBy('position')->paginate(8);
-            return Inertia::render('Admin/Teachers', [
-                'teachers' => $list,
-            ]);
-        }
-        else{
-            return abort(403);
-        }
+        //
     }
 
     /**
@@ -40,7 +32,7 @@ class TeachersController extends Controller
      */
     public function create()
     {
-        //return Inertia::render('Auth/Register');
+        //
     }
 
     /**
@@ -48,13 +40,13 @@ class TeachersController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Teachers $teachers)
+    public function show(Sections $sections)
     {
         //
     }
@@ -62,7 +54,7 @@ class TeachersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teachers $teachers)
+    public function edit(Sections $sections)
     {
         //
     }
@@ -70,7 +62,7 @@ class TeachersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teachers $teachers)
+    public function update(Request $request, Sections $sections)
     {
         //
     }
@@ -78,7 +70,7 @@ class TeachersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teachers $teachers)
+    public function destroy(Sections $sections)
     {
         //
     }
