@@ -7,21 +7,37 @@ import TextInput from '@/Components/TextInput.vue';
 
 import { Link, useForm } from '@inertiajs/vue3'
 
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    role: 2,
-    birthdate: '',
-    gender: '',
-    position: '',
-    hs: '',
-    password_confirmation: '',
+// const form = useForm({
+//     name: '',
+//     email: '',
+//     password: '',
+//     role: 2,
+//     birthdate: '',
+//     gender: '',
+//     position: '',
+//     hs: '',
+//     password_confirmation: '',
+// });
+
+const getInitialFormData = () => ({ 
+  name: "", 
+  email: "",
+  password: "",
+  role: "",
+  birthdate: "",
+  gender: "",
+  position: "",
+  hs: "",
+  password_confirmation: "",
 });
+
+const form = useForm(getInitialFormData());
+
+const resetUserForm = () => Object.assign(form, getInitialFormData());
 
 const submit = () => {
     form.post(route('register'), {
-        onFinish: () => form.reset(),
+      onFinish: () => resetUserForm,
     });
 };
 </script>
@@ -47,6 +63,7 @@ export default {
         <div class="modal-body">
           <form @submit.prevent="submit">
             <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <TextInput type="hidden" value=2 v-model="form.role"/>
               <div>
                   <InputLabel for="name" value="Name" />
                   <TextInput
@@ -156,9 +173,14 @@ export default {
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Teacher Registered. </p>
                 </Transition>
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="ml-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </PrimaryButton>
+                <button
+                  class="ml-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900"
+                  @click="form.reset()" >
+                  Reset
+              </button>
                 <RedButton class="ml-2" 
                   @click="$emit('close')"
                   >
@@ -167,13 +189,9 @@ export default {
             </div>
         </form>
         </div>
-        
-        <!--
-        <div class="modal-footer">
-          <slot name="footer">
-          </slot>
-        </div>
-        -->
+        <!-- <div class="modal-footer">
+            
+        </div> -->
       </div >
     </div>
   </Transition >

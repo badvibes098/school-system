@@ -25,7 +25,8 @@ class TeachersController extends Controller
     public function index(): Response
     {
         if (Gate::allows('admin-access')){
-            $list = Teachers::where('role', 2)->orderBy('position')->paginate(8);
+            //$list = Teachers::where('role', 2)->orderBy('position')->paginate(8);
+            $list = Teachers::where('role', 2)->orderBy('name')->get();
             return Inertia::render('Admin/Teachers', [
                 'teachers' => $list,
             ]);
@@ -40,7 +41,7 @@ class TeachersController extends Controller
      */
     public function create()
     {
-        //return Inertia::render('Auth/Register');
+        //
     }
 
     /**
@@ -54,9 +55,24 @@ class TeachersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Teachers $teachers)
+    public function show(Request $request)
     {
-        //
+        if (Gate::allows('admin-access')){
+            $keyword = $request->input('keyword');
+            $query = [  'field' => 'value',
+                        'another_field' => 'another_value',
+                    ];
+            $list = Teachers::where('role', 2)
+                                ->where('name', 'like', '%'.$keyword.'%')
+                                //->orWhere('email', 'like', '%'.$keyword.'%')
+                                ->get();
+                return Inertia::render('Admin/Teachers', [
+                    'teachers' => $list,
+                ]);
+        }
+        else{
+            return abort(403);
+        }
     }
 
     /**

@@ -9,6 +9,9 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+
+use App\Http\Controllers\Admin\TeachersController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -53,7 +56,8 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
     
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
-    
+
+    Route::post('teacher', [TeachersController::class, 'show'])->name('teacher');
 });
 
 
