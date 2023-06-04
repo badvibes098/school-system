@@ -19,7 +19,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('teachers-dashboard.index')">
                                     <div class="w-10 h-10 fill-current text-gray-500">
                                         <img :src="'/images/agusan_logo.png'" >
                                     </div>
@@ -28,7 +28,7 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('teachers-dashboard.index')" :active="route().current('teachers-dashboard')">
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -111,7 +111,7 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('teachers-dashboard.index')" :active="route().current('teachers-dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
                     </div>

@@ -1,7 +1,14 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\Admin\TeachersController;
+use App\Http\Controllers\Admin\SectionsController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SettingsController;
+
+use App\Http\Controllers\Teachers\TDashboardController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,33 +33,39 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    $role = Auth::user()->role;
-    if ( $role === 1){
-        return Inertia::render('Admin/Dashboard');
-    }
-    else{
-        return Inertia::render('Teachers/Dashboard');
-    }
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::get('/settings', function () {
-    return Inertia::render('Admin/Settings');
-})->middleware(['auth', 'verified'])->name('settings');
-
-Route::get('/sections', function () {
-    return Inertia::render('Admin/Sections');
-})->middleware(['auth', 'verified'])->name('sections');
-
+// profile for admin and teachers
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-// Admin resources 
+// Admin resources
+// Dashboard Page
+Route::resource('dashboard', DashboardController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
+
+// Settings Page
+Route::resource('settings', SettingsController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
+
+
+// Teachers Page
 Route::resource('teachers', TeachersController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
+
+// Sections Page
+Route::resource('sections', SectionsController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
+
+// Teachers resources
+// Dashboard Page
+Route::resource('teachers-dashboard', TDashboardController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
+
 
 require __DIR__.'/auth.php';

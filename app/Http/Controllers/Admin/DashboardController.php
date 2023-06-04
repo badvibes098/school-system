@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Teachers;
 use Illuminate\Http\Request;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -14,10 +14,9 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Illuminate\Support\Facades\Gate;
 
-class TeachersController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,10 +24,11 @@ class TeachersController extends Controller
     public function index(): Response
     {
         if (Gate::allows('admin-access')){
-            //$list = Teachers::where('role', 2)->orderBy('position')->paginate(8);
-            $list = Teachers::where('role', 2)->orderBy('name')->get();
-            return Inertia::render('Admin/Teachers/Teachers', [
-                'teachers' => $list,
+            return Inertia::render('Admin/Dashboard/Dashboard', [
+            ]);
+        }
+        else if (Gate::allows('teacher-access')){
+            return Inertia::render('Teachers/Dashboard/Dashboard', [
             ]);
         }
         else{
@@ -49,36 +49,21 @@ class TeachersController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(string $id)
     {
-        if (Gate::allows('admin-access')){
-            $keyword = $request->input('keyword');
-            $query = [  'field' => 'value',
-                        'another_field' => 'another_value',
-                    ];
-            $list = Teachers::where('role', 2)
-                                ->where('name', 'like', '%'.$keyword.'%')
-                                //->orWhere('email', 'like', '%'.$keyword.'%')
-                                ->get();
-                return Inertia::render('Admin/Teachers', [
-                    'teachers' => $list,
-                ]);
-        }
-        else{
-            return abort(403);
-        }
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teachers $teachers)
+    public function edit(string $id)
     {
         //
     }
@@ -86,7 +71,7 @@ class TeachersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teachers $teachers)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -94,7 +79,7 @@ class TeachersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teachers $teachers)
+    public function destroy(string $id)
     {
         //
     }

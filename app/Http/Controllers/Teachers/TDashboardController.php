@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-//use App\Models\Admin\Sections;
+namespace App\Http\Controllers\Teachers;
 
 use App\Http\Controllers\Controller;
-
-//use App\Models\Admin\Teachers;
-
 use Illuminate\Http\Request;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -18,18 +14,17 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Illuminate\Support\Facades\Gate;
 
-class SectionsController extends Controller
+class TDashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): Response
     {
-        if (Gate::allows('admin-access')){
-            return Inertia::render('Admin/Sections/Sections', [
+        if (Gate::allows('teacher-access')){
+            return Inertia::render('Teachers/Dashboard/Dashboard', [
             ]);
         }
         else{
@@ -56,7 +51,7 @@ class SectionsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sections $sections)
+    public function show(string $id)
     {
         //
     }
@@ -64,7 +59,7 @@ class SectionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sections $sections)
+    public function edit(string $id)
     {
         //
     }
@@ -72,7 +67,7 @@ class SectionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sections $sections)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -80,7 +75,7 @@ class SectionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sections $sections)
+    public function destroy(string $id)
     {
         //
     }
