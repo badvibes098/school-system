@@ -59,14 +59,11 @@ class TeachersController extends Controller
     {
         if (Gate::allows('admin-access')){
             $keyword = $request->input('keyword');
-            $query = [  'field' => 'value',
-                        'another_field' => 'another_value',
-                    ];
             $list = Teachers::where('role', 2)
                                 ->where('name', 'like', '%'.$keyword.'%')
                                 //->orWhere('email', 'like', '%'.$keyword.'%')
                                 ->get();
-                return Inertia::render('Admin/Teachers', [
+                return Inertia::render('Admin/Teachers/Teachers', [
                     'teachers' => $list,
                 ]);
         }

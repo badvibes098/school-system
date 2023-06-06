@@ -74,14 +74,18 @@ const submit = () => {
                               <span class="sr-only">Search</span>
                           </button>
                       </form>
+                      <p>Number of Results: {{ teachers.length }}</p>
                       <!--end search-->
-                    <br/>
+                    
                         <!-- table -->
                           <div  class="relative overflow-x-auto">
                             
                               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                       <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                              No.
+                                          </th>
                                           <th scope="col" class="px-6 py-3">
                                               Name of Teacher
                                           </th>
@@ -100,11 +104,38 @@ const submit = () => {
                                       </tr>
                                   </thead>
                                   <tbody>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                        v-for="teacher, index in teachers"
+                                        :key="teacher.id"
+                                        :teacher="teacher"
+                                    >
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ index + 1 }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{ teacher.name.toUpperCase() }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ teacher.email.toLowerCase() }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ teacher.position }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ teacher.hs === 1 ? "Junior High School" : "Senior High School" }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Change Password</a>
+                                        </td>
+                                    
+                                    </tr>
+                                    <!--
                                     <ListTeacher
                                       v-for="teacher in teachers"
                                       :key="teacher.id"
                                       :teacher="teacher"
                                     /> 
+                                    -->
                                   </tbody>
                                 </table>
                                 <!--<Pagination class="mt-6" :links="teachers.links" />-->

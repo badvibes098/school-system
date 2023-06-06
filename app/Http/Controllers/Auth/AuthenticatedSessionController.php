@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Models\Teachers;
 
 class AuthenticatedSessionController extends Controller
@@ -37,8 +39,17 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
     
         $request->session()->all();
-            
-        return redirect()->intended(RouteServiceProvider::HOME);
+        
+        // choose what type of user
+        if (Gate::allows('admin-access')){
+            return redirect(RouteServiceProvider::ADMINHOME);
+        }
+        else if (Gate::allows('teacher-access')){
+            return redirect(RouteServiceProvider::TEACHERHOME);
+        }
+        else{
+            return abort(403);
+        }
     }
 
     /**

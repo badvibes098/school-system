@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Gate;
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -17,7 +19,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';
+    public const ADMINHOME = '/dashboard';
+    public const TEACHERHOME = '/teachers-dashboard';
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
