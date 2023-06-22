@@ -28,6 +28,7 @@ const getInitialFormData = () => ({
   gender: "",
   position: "",
   hs: "",
+  u_school_id: "",
   password_confirmation: "",
 });
 
@@ -63,6 +64,7 @@ export default {
         <div class="modal-body">
           <form @submit.prevent="submit">
             <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <TextInput type="hidden" value=304104 v-model="form.u_school_id"/>
               <TextInput type="hidden" value=2 v-model="form.role"/>
               <div>
                   <InputLabel for="name" value="Name" />
@@ -110,7 +112,7 @@ export default {
                 <div class="mt-3 block w-full">
                   <input id="default-radio-1" type="radio" value="male" name="default-radio" v-model="form.gender" required>
                   <label for="default-radio-1" class="px-6">Male</label>
-                  <input checked id="default-radio-2" type="radio" value="female" name="default-radio" v-model="form.gender" required>
+                  <input id="default-radio-2" type="radio" value="female" name="default-radio" v-model="form.gender" required>
                   <label for="default-radio-2" class="px-6">Female</label>
                 </div>
               </div>

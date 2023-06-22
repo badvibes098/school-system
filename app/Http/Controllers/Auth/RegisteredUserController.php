@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'hs' => 'required|integer',
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'birthdate' => $request->birthdate,
@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
             'position' => $request->position,
             'hs' => $request->hs,
             'role' => 2,
+            'u_school_id' => Auth::user()->u_school_id,
             'password' => Hash::make($request->password),
         ]);
 

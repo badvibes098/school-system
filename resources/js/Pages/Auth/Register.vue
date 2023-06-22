@@ -11,6 +11,7 @@ const form = useForm({
     email: '',
     password: '',
     role: 2,
+    u_school_id: 304104,
     password_confirmation: '',
 });
 
@@ -27,6 +28,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
+                <input type="hidden" v-model="form.u_school_id" name="u_school_id" value={{$page.props.auth.user.u_school_id}} >
                 <InputLabel for="name" value="Name" />
 
                 <TextInput

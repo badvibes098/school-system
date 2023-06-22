@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         //\App\Models\User::factory(10)->create();
+        DB::table('tbl_schools')->insert([
+            'school_id' => 304104,
+            'school_name' => 'Agusan National High School',
+        ]);
 
         \App\Models\User::factory()->create([
              'name' => 'Administrator',
@@ -24,6 +29,7 @@ class DatabaseSeeder extends Seeder
              'gender' => 'male',
              'position' => 'Special Science Teacher 1',
              'hs' => 2,
+             'u_school_id' => 304104,
              'remember_token' => '',
              'created_at' => '2023-05-15 01:44:14',
              'updated_at' => '2023-05-15 01:44:14',

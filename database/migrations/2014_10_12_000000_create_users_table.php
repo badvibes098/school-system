@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('gender');
             $table->string('position');
             $table->integer('hs');
+
+            $table->bigInteger('u_school_id')->unsigned()->index()->nullable();
+            $table->foreign('u_school_id')->references('school_id')->on('tbl_schools')->onDelete('restrict');
+
             $table->rememberToken();
             $table->timestamps();
         });

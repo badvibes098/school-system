@@ -26,7 +26,9 @@ class TeachersController extends Controller
     {
         if (Gate::allows('admin-access')){
             //$list = Teachers::where('role', 2)->orderBy('position')->paginate(8);
-            $list = Teachers::where('role', 2)->orderBy('name')->get();
+            $list = Teachers::where('role', 2)
+                            ->where('u_school_id', Auth::user()->u_school_id)
+                            ->orderBy('name')->get();
             return Inertia::render('Admin/Teachers/Teachers', [
                 'teachers' => $list,
             ]);
@@ -60,6 +62,7 @@ class TeachersController extends Controller
         if (Gate::allows('admin-access')){
             $keyword = $request->input('keyword');
             $list = Teachers::where('role', 2)
+                                ->where('u_school_id', Auth::user()->u_school_id)
                                 ->where('name', 'like', '%'.$keyword.'%')
                                 //->orWhere('email', 'like', '%'.$keyword.'%')
                                 ->get();
